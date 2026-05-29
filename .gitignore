@@ -1,9 +1,7 @@
-venv/
-*.pyc
 __pycache__/
+*.pyc
 *.log
-.idea/
-.vscode/
-*.sqlite3
-node_modules/
-odoo/
+*.sqlite
+*.db
+venv/
+.env
