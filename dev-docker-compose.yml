@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: ze_postgres_dev
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    restart: always
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+
+  odoo:
+    image: odoo:17
+    container_name: ze_odoo_dev
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    restart: always
+    volumes:
+      - ./addons:/mnt/extra-addons
+      - ./etc:/etc/odoo
+      - ./logs:/var/log/odoo
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: odoo
+
+volumes:
+  postgres_data_dev:
