@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payslip_details">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                     <style>
+                        .text-header {
+                            font-size: 12px;
+                            font-weight: bold;
+                            text-align: center;
+                            margin-bottom: 1px;
+                            text-decoration: underline;
+                        }
+
+                        .table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .table th, .table td {
+                            border: 1px solid black;
+                            text-align: left;
+                            font-size: 12px;
+                            margin-bottom: 1px;
+                        }
+
+                        .table thead th {
+                            background-color: #f2f2f2;
+                        }
+
+                        .text-end {
+                            text-align: right;
+                        }
+
+                        .page {
+                            margin: 20px;
+                        }
+                    </style>
+                    <div class="page">
+                        <div class="text-header">
+                            <h6>
+                                <span t-esc="o.company_id.name"/>
+                            </h6>
+                            <h6>Monthly Pay Slip</h6>
+                            <h6>For the Month of <span t-esc="o.date_from"/> - <span t-esc="o.date_to"/></h6>
+                        </div>
+                        <div>
+                            <p>Staff Name: <span t-esc="o.employee_id.name"/></p>
+                            <p>ID: <span t-esc="o.employee_id.identification_id"/></p>
+                            <p>Position: <span t-esc="o.contract_id.job_id.name"/></p>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+<!--                                    <th>-->
+<!--                                        <t t-if="o.is_usd">Amount (USD)</t>-->
+
+<!--                                    </th>-->
+                                    <th>Rate</th>
+                                    <th>Amount (ETB)</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids.filtered(lambda l: l.total > 0)" t-as="line">
+                                    <td><span t-esc="line.name"/></td>
+<!--                                    <td>-->
+<!--                                        <t t-if="o.is_usd">-->
+<!--                                            <span t-esc="line.amount_etb"/>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+                                    <td>
+                                        <span t-esc="line.rate"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.total"/>
+                                    </td>
+                                    <td>
+                                        <!-- Render dynamic remarks here -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Salary structure -->
+    <record id="view_hr_salary_exchange_rate_list_view" model="ir.ui.view">
+        <field name="name">hr.salary.exchange.rate</field>
+        <field name="model">hr.salary.exchange.rate</field>
+        <field name="arch" type="xml">
+            <tree string="Exchange Rate">
+                <field name="currency_id"/>
+                <field name="exchange_rate"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_salary_exchange_rate" model="ir.actions.act_window">
+        <field name="name">Salary Exchange Rate</field>
+        <field name="res_model">hr.salary.exchange.rate</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new exchange rate
+            </p>
+
+        </field>
+    </record>
+
+
+    <menuitem
+            id="menu_hr_salary_rule_category"
+            action="action_hr_salary_exchange_rate"
+            parent="menu_hr_payroll_configuration"
+            sequence="13"/>
+
+</odoo>

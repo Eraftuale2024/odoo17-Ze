@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payroll_loe_validation_wizard_form" model="ir.ui.view">
+        <field name="name">payroll.loe.validation.wizard.form</field>
+        <field name="model">payroll.loe.validation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="LOE Validation">
+                <group>
+                    <field name="payslip_run_id" widget="many2one"/>
+                    <field name="validation_result" widget="html"/>
+                </group>
+                <footer>
+                    <button name="action_validate" string="Validate LOE" type="object" class="btn-primary"/>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_payroll_loe_validation_wizard" model="ir.actions.act_window">
+        <field name="name">LOE Validation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">payroll.loe.validation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
