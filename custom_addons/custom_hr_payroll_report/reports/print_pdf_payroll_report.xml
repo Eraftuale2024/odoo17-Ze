@@ -1,0 +1,1096 @@
+<odoo>
+    <template id="hr_report_template_id">
+        <t t-call="web.basic_layout">
+            <style>
+                .text-header {
+                font-size: 12px;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 1px;
+                text-decoration: underline;
+                }
+
+                .table {
+                width: 100%;
+                border-collapse: collapse;
+                }
+
+                .table th, .table td {
+                border: 1px solid black;
+                text-align: left;
+                font-size: 9px;
+                margin-bottom: 1px;
+                }
+
+                .table thead th {
+                background-color: #f2f2f2;
+                }
+
+                .text-end {
+                text-align: right;
+                }
+
+                .page {
+                margin: 20px;
+                }
+
+                .footer-row {
+                font-weight: bold;
+                background-color: #f2f2f2;
+                }
+            </style>
+            <div class="page">
+                <div class="text-header">
+                    <h3>Ethiopia Securities Exchange</h3>
+
+                    <h5>Payroll For the Month of
+                        <t t-esc="colum['month']"/>
+                    </h5>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <t t-if="colum['employee']">
+                                <th>Employee</th>
+                            </t>
+                            <t t-if="colum['department_id']">
+                                <th>Department</th>
+                            </t>
+                            <t t-if="colum['tin_no']">
+                                <th>Tin no</th>
+                            </t>
+                            <t t-if="colum['pension_no']">
+                                <th>Pension No</th>
+                            </t>
+                            <t t-if="colum['employment_date']">
+                                <th>Empl't Date</th>
+                            </t>
+                            <t t-if="colum['total_working_days']">
+                                <th>Total Working Days</th>
+                            </t>
+                            <t t-if="colum['total_day_worked']">
+                                <th>Total Day Worked</th>
+                            </t>
+                            <t t-if="colum['bank_account_id']">
+                                <th>Bank Account</th>
+                            </t>
+                            <t t-if="colum['structure']">
+                                <th>Structure</th>
+                            </t>
+                            <t t-if="colum['payslip_run_name']">
+                                <th>Payslip Run Name</th>
+                            </t>
+                            <t t-if="colum['payslip_name']">
+                                <th>Payslip Name</th>
+                            </t>
+                            <t t-if="colum['income_task_region']">
+                                <th>Income Task Region</th>
+                            </t>
+                            <t t-if="colum['pension_task_region']">
+                                <th>Pension Task Region</th>
+                            </t>
+                            <t t-if="colum['period']">
+                                <th>Period</th>
+                            </t>
+                            <t t-if="colum['monthly_basic_salary']">
+                                <th>Monthly Basic Salary</th>
+                            </t>
+                            <t t-if="colum['basic_etb']">
+                                <th>BASIC (ETB)</th>
+                            </t>
+                            <t t-if="colum['pension']">
+                                <th>Employee Pension (7%)</th>
+                            </t>
+                            <t t-if="colum['pension_comp']">
+                                <th>Employer Pension (11%)</th>
+                            </t>
+                            <t t-if="colum['provident_employee']">
+                                <th>Employee Provident Fund</th>
+                            </t>
+                            <t t-if="colum['provident_employer']">
+                                <th>Employer Provident Fund</th>
+                            </t>
+                            <t t-if="colum['total_provident']">
+                                <th>Total Provident Fund</th>
+                            </t>
+                            <t t-if="colum['travel_allowance']">
+                                <th>Transport Allowance</th>
+                            </t>
+                            <t t-if="colum['desert_allowance']">
+                                <th>Desert Allowance</th>
+                            </t>
+                            <t t-if="colum['hra']">
+                                <th>HRA</th>
+                            </t>
+                            <t t-if="colum['cost_sharing']">
+                                <th>CS</th>
+                            </t>
+                            <t t-if="colum['other_deduction']">
+                                <th>OD</th>
+                            </t>
+                            <t t-if="colum['position_allowance']">
+                                <th>Position Allowance</th>
+                            </t>
+                            <t t-if="colum['representation_allowance']">
+                                <th>Representation Allowance</th>
+                            </t>
+                            <t t-if="colum['cleaning_allowance']">
+                                <th>Cleaning Allowance</th>
+                            </t>
+                            <t t-if="colum['other_allowance']">
+                                <th>Other Allowance</th>
+                            </t>
+                            <t t-if="colum['meal_allowance']">
+                                <th>Meal Allowance</th>
+                            </t>
+                            <t t-if="colum['medical_allowance']">
+                                <th>Medical Allowance</th>
+                            </t>
+                            <t t-if="colum['communication_allowance']">
+                                <th>Communication Allowance</th>
+                            </t>
+                            <t t-if="colum['internet_allowance']">
+                                <th>Mobile Allowance</th>
+                            </t>
+                            <t t-if="colum['fuel_allowance']">
+                                <th>Fuel Allowance</th>
+                            </t>
+                            <t t-if="colum['unused_leave_payment']">
+                                <th>Unused Leave Payment</th>
+                            </t>
+                            <t t-if="colum['severance_pay_compensation']">
+                                <th>Severance Pay Compensation</th>
+                            </t>
+                            <t t-if="colum['training_development']">
+                                <th>Training And Development</th>
+                            </t>
+                            <t t-if="colum['bonus']">
+                                <th>Bonus</th>
+                            </t>
+                            <t t-if="colum['overtime']">
+                                <th>Overtime</th>
+                            </t>
+                            <t t-if="colum['additional']">
+                                <th>Additional</th>
+                            </t>
+                            <t t-if="colum['dsa_allowance']">
+                                <th>DSA Allowance</th>
+                            </t>
+                            <t t-if="colum['tax_dsa_allowance']">
+                                <th>Tax DSA Allowance</th>
+                            </t>
+                            <t t-if="colum['travel_allowance_notax']">
+                                <th>None Taxable Transport Allowance</th>
+                            </t>
+                            <t t-if="colum['non_tax_desert_allowance']">
+                                <th>Non Tax Desert Allowance</th>
+                            </t>
+                            <t t-if="colum['non_tax_position_allowance']">
+                                <th>Non Tax Position Allowance</th>
+                            </t>
+                            <t t-if="colum['non_tax_internet_allowance']">
+                                <th>Non Tax Mobile Allowance</th>
+                            </t>
+                            <t t-if="colum['non_tax_cleaning_allowance']">
+                                <th>Non Tax Cleaning Allowance</th>
+                            </t>
+                            <t t-if="colum['non_tax_other_allowance']">
+                                <th>Non Tax Other Allowance</th>
+                            </t>
+                            <t t-if="colum['none_tax_das_allowance']">
+                                <th>None tax DSA allowance</th>
+                            </t>
+                            <t t-if="colum['sum_non_taxable']">
+                                <th>Sum Non Taxable</th>
+                            </t>
+                            <t t-if="colum['gross']">
+                                <th>Gross</th>
+                            </t>
+                            <t t-if="colum['taxable_salary']">
+                                <th>Taxable Salary</th>
+                            </t>
+                            <t t-if="colum['tax']">
+                                <th>Income Tax</th>
+                            </t>
+                            <t t-if="colum['pf_14']">
+                                <th>PF 14%</th>
+                            </t>
+                            <t t-if="colum['pension_18']">
+                                <th>Pension 18%</th>
+                            </t>
+                            <t t-if="colum['different_deduction']">
+                                <th>Different Deduction</th>
+                            </t>
+                            <t t-if="colum['total_payment']">
+                                <th>Severance Net Payment</th>
+                            </t>
+                            <t t-if="colum['total_adjusted_payout']">
+                                <th>Severance TAX Payment</th>
+                            </t>
+                            <t t-if="colum['expense']">
+                                <th>Expense</th>
+                            </t>
+                            <t t-if="colum['loan']">
+                                <th>Loan</th>
+                            </t>
+                            <t t-if="colum['advance_salary']">
+                                <th>Advance Salary</th>
+                            </t>
+                            <t t-if="colum['total_deduction']">
+                                <th>Total Deduction</th>
+                            </t>
+                            <t t-if="colum['total_non_taxable']">
+                                <th>Total Non Taxable</th>
+                            </t>
+
+                            <t t-if="colum['net']">
+                                <th>Net</th>
+                            </t>
+                            <th>Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="total_data" t-as="data">
+                            <t t-set="sum_monthly_basic_salary" t-value="0"/>
+                            <t t-set="sum_basic_etb" t-value="0"/>
+                            <t t-set="sum_pension" t-value="0"/>
+                            <t t-set="sum_pension_comp" t-value="0"/>
+                            <t t-set="sum_provident_employee" t-value="0"/>
+                            <t t-set="sum_provident_employer" t-value="0"/>
+                            <t t-set="sum_total_provident" t-value="0"/>
+                            <t t-set="sum_travel_allowance" t-value="0"/>
+                            <t t-set="sum_desert_allowance" t-value="0"/>
+                            <t t-set="sum_hra" t-value="0"/>
+                            <t t-set="sum_cost_sharing" t-value="0"/>
+                            <t t-set="sum_other_deduction" t-value="0"/>
+                            <t t-set="sum_position_allowance" t-value="0"/>
+                            <t t-set="sum_representation_allowance" t-value="0"/>
+                            <t t-set="sum_cleaning_allowance" t-value="0"/>
+                            <t t-set="sum_other_allowance" t-value="0"/>
+                            <t t-set="sum_meal_allowance" t-value="0"/>
+                            <t t-set="sum_medical_allowance" t-value="0"/>
+                            <t t-set="sum_communication_allowance" t-value="0"/>
+                            <t t-set="sum_internet_allowance" t-value="0"/>
+                            <t t-set="sum_fuel_allowance" t-value="0"/>
+                            <t t-set="sum_unused_leave_payment" t-value="0"/>
+                            <t t-set="sum_severance_pay_compensation" t-value="0"/>
+                            <t t-set="sum_training_development" t-value="0"/>
+                            <t t-set="sum_bonus" t-value="0"/>
+                            <t t-set="sum_overtime" t-value="0"/>
+                            <t t-set="sum_additional" t-value="0"/>
+                            <t t-set="sum_tax_dsa_allowance" t-value="0"/>
+                            <t t-set="sum_travel_allowance_notax" t-value="0"/>
+                            <t t-set="sum_non_tax_desert_allowance" t-value="0"/>
+                            <t t-set="sum_non_tax_position_allowance" t-value="0"/>
+                            <t t-set="sum_non_tax_internet_allowance" t-value="0"/>
+                            <t t-set="sum_non_tax_cleaning_allowance" t-value="0"/>
+                            <t t-set="sum_non_tax_other_allowance" t-value="0"/>
+                            <t t-set="sum_sum_non_taxable" t-value="0"/>
+                            <t t-set="sum_gross" t-value="0"/>
+                            <t t-set="sum_taxable_salary" t-value="0"/>
+                            <t t-set="sum_tax" t-value="0"/>
+                            <t t-set="sum_pf_14" t-value="0"/>
+                            <t t-set="sum_pension_18" t-value="0"/>
+                            <t t-set="sum_different_deduction" t-value="0"/>
+                            <t t-set="sum_total_payment" t-value="0"/>
+                            <t t-set="sum_total_adjusted_payout" t-value="0"/>
+                            <t t-set="sum_expense" t-value="0"/>
+                            <t t-set="sum_loan" t-value="0"/>
+                            <t t-set="sum_advance_salary" t-value="0"/>
+                            <t t-set="sum_total_deduction" t-value="0"/>
+                            <t t-set="sum_total_non_taxable" t-value="0"/>
+                            <t t-set="sum_dsa_allowance" t-value="0"/>
+                            <t t-set="sum_net" t-value="0"/>
+                            <t t-set="sum_none_tax_das_allowance" t-value="0"/>
+                            <t t-set="i" t-value="0"/>
+                            <tr>
+                                <td colspan="7">
+                                    <t t-esc="data['department']"/>
+                                </td>
+                            </tr>
+                            <t t-foreach="data['docs']" t-as="doc">
+                                <tr>
+                                    <td>
+                                        <t t-set="i" t-value="i + 1"/>
+                                        <span t-esc="i"/>
+                                    </td>
+
+                                    <t t-if="colum['employee']">
+                                        <td>
+                                            <t t-esc="doc.employee"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['department_id']">
+                                        <td>
+                                            <t t-esc="doc.department_id.name"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['tin_no']">
+                                        <td>
+                                            <t t-esc="doc.tin_no"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['pension_no']">
+                                        <td>
+                                            <t t-esc="doc.pension_no"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['employment_date']">
+                                        <td>
+                                            <t t-esc="doc.employment_date"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['total_working_days']">
+                                        <td>
+                                            <t t-esc="doc.total_working_days"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['total_day_worked']">
+                                        <td>
+                                            <t t-esc="doc.total_day_worked"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['bank_account_id']">
+                                        <td>
+                                            <t t-esc="doc.bank_account_id.acc_number"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['structure']">
+                                        <td>
+                                            <t t-esc="doc.structure"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['payslip_run_name']">
+                                        <td>
+                                            <t t-esc="doc.payslip_run_name"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['payslip_name']">
+                                        <td>
+                                            <t t-esc="doc.payslip_name"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['income_task_region']">
+                                        <td>
+                                            <t t-esc="doc.income_task_region"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['pension_task_region']">
+                                        <td>
+                                            <t t-esc="doc.pension_task_region"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['period']">
+                                        <td>
+                                            <t t-esc="doc.period"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="colum['monthly_basic_salary']">
+
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.monthly_basic_salary)"/>
+                                        </td>
+                                        <t t-set="sum_monthly_basic_salary"
+                                           t-value="sum_monthly_basic_salary + doc.monthly_basic_salary"/>
+                                    </t>
+                                    <t t-if="colum['basic_etb']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.basic_etb)"/>
+                                        </td>
+                                        <t t-set="sum_basic_etb" t-value="sum_basic_etb + doc.basic_etb"/>
+                                    </t>
+                                    <t t-if="colum['pension']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.pension)"/>
+                                        </td>
+                                        <t t-set="sum_pension" t-value="sum_pension + doc.pension"/>
+                                    </t>
+                                    <t t-if="colum['pension_comp']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.pension_comp)"/>
+                                        </td>
+                                        <t t-set="sum_pension_comp" t-value="sum_pension_comp + doc.pension_comp"/>
+                                    </t>
+                                    <t t-if="colum['provident_employee']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.provident_employee)"/>
+                                        </td>
+                                        <t t-set="sum_provident_employee"
+                                           t-value="sum_provident_employee + doc.provident_employee"/>
+                                    </t>
+                                    <t t-if="colum['provident_employer']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.provident_employer)"/>
+                                        </td>
+                                        <t t-set="sum_provident_employer"
+                                           t-value="sum_provident_employer + doc.provident_employer"/>
+                                    </t>
+                                    <t t-if="colum['total_provident']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.total_provident)"/>
+                                        </td>
+                                        <t t-set="sum_total_provident"
+                                           t-value="sum_total_provident + doc.total_provident"/>
+
+                                    </t>
+                                    <t t-if="colum['travel_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.travel_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_travel_allowance"
+                                           t-value="sum_travel_allowance + doc.travel_allowance"/>
+                                    </t>
+                                    <t t-if="colum['desert_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.desert_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_desert_allowance"
+                                           t-value="sum_desert_allowance + doc.desert_allowance"/>
+                                    </t>
+                                    <t t-if="colum['hra']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.hra)"/>
+                                        </td>
+                                        <t t-set="sum_hra" t-value="sum_hra + doc.hra"/>
+                                    </t>
+                                    <t t-if="colum['cost_sharing']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.cost_sharing)"/>
+                                        </td>
+                                        <t t-set="cost_sharing"
+                                           t-value="cost_sharing + doc.cost_sharing"/>
+                                    </t>
+                                    <t t-if="colum['other_deduction']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.other_deduction)"/>
+                                        </td>
+                                        <t t-set="other_deduction"
+                                           t-value="other_deduction + doc.other_deduction"/>
+                                    </t>
+                                    <t t-if="colum['position_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.position_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_position_allowance"
+                                           t-value="sum_position_allowance + doc.position_allowance"/>
+                                    </t>
+                                    <t t-if="colum['representation_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.representation_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_representation_allowance"
+                                           t-value="sum_representation_allowance + doc.representation_allowance"/>
+                                    </t>
+                                    <t t-if="colum['cleaning_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.cleaning_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_cleaning_allowance"
+                                           t-value="sum_cleaning_allowance + doc.cleaning_allowance"/>
+                                    </t>
+                                    <t t-if="colum['other_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.other_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_other_allowance"
+                                           t-value="sum_other_allowance + doc.other_allowance"/>
+                                    </t>
+                                    <t t-if="colum['meal_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.meal_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_meal_allowance"
+                                           t-value="sum_meal_allowance + doc.meal_allowance"/>
+                                    </t>
+                                    <t t-if="colum['medical_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.medical_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_medical_allowance"
+                                           t-value="sum_medical_allowance + doc.medical_allowance"/>
+                                    </t>
+                                    <t t-if="colum['communication_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.communication_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_communication_allowance"
+                                           t-value="sum_communication_allowance + doc.communication_allowance"/>
+                                    </t>
+                                    <t t-if="colum['internet_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.internet_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_internet_allowance"
+                                           t-value="sum_internet_allowance + doc.internet_allowance"/>
+                                    </t>
+                                    <t t-if="colum['fuel_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.fuel_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_fuel_allowance"
+                                           t-value="sum_fuel_allowance + doc.fuel_allowance"/>
+                                    </t>
+                                    <t t-if="colum['unused_leave_payment']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.unused_leave_payment)"/>
+                                        </td>
+                                        <t t-set="sum_unused_leave_payment"
+                                           t-value="sum_unused_leave_payment + doc.unused_leave_payment"/>
+                                    </t>
+                                    <t t-if="colum['severance_pay_compensation']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.severance_pay_compensation)"/>
+                                        </td>
+                                        <t t-set="sum_severance_pay_compensation"
+                                           t-value="sum_severance_pay_compensation + doc.severance_pay_compensation"/>
+                                    </t>
+                                    <t t-if="colum['training_development']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.training_development)"/>
+                                        </td>
+                                        <t t-set="sum_training_development"
+                                           t-value="sum_training_development + doc.training_development"/>
+                                    </t>
+                                    <t t-if="colum['bonus']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.bonus)"/>
+                                        </td>
+                                        <t t-set="sum_bonus" t-value="sum_bonus + doc.bonus"/>
+                                    </t>
+                                    <t t-if="colum['overtime']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.overtime)"/>
+                                        </td>
+                                        <t t-set="sum_overtime" t-value="sum_overtime + doc.overtime"/>
+                                    </t>
+                                    <t t-if="colum['additional']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.additional)"/>
+                                        </td>
+                                        <t t-set="sum_additional" t-value="sum_additional + doc.additional"/>
+                                    </t>
+                                    <t t-if="colum['dsa_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.dsa_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_dsa_allowance" t-value="sum_dsa_allowance + doc.dsa_allowance"/>
+                                    </t>
+                                    <t t-if="colum['tax_dsa_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.tax_dsa_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_tax_dsa_allowance"
+                                           t-value="sum_tax_dsa_allowance + doc.tax_dsa_allowance"/>
+                                    </t>
+                                    <t t-if="colum['travel_allowance_notax']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.travel_allowance_notax)"/>
+                                        </td>
+                                        <t t-set="sum_travel_allowance_notax"
+                                           t-value="sum_travel_allowance_notax + doc.travel_allowance_notax"/>
+                                    </t>
+                                    <t t-if="colum['non_tax_desert_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.non_tax_desert_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_non_tax_desert_allowance"
+                                           t-value="sum_non_tax_desert_allowance + doc.non_tax_desert_allowance"/>
+                                    </t>
+                                    <t t-if="colum['non_tax_position_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.non_tax_position_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_non_tax_position_allowance"
+                                           t-value="sum_non_tax_position_allowance + doc.non_tax_position_allowance"/>
+                                    </t>
+                                    <t t-if="colum['non_tax_internet_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.non_tax_internet_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_non_tax_internet_allowance"
+                                           t-value="sum_non_tax_internet_allowance + doc.non_tax_internet_allowance"/>
+                                    </t>
+                                    <t t-if="colum['non_tax_cleaning_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.non_tax_cleaning_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_non_tax_cleaning_allowance"
+                                           t-value="sum_non_tax_cleaning_allowance + doc.non_tax_cleaning_allowance"/>
+                                    </t>
+                                    <t t-if="colum['non_tax_other_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.non_tax_other_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_non_tax_other_allowance"
+                                           t-value="sum_non_tax_other_allowance + doc.non_tax_other_allowance"/>
+                                    </t>
+                                    <t t-if="colum['none_tax_das_allowance']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.none_tax_das_allowance)"/>
+                                        </td>
+                                        <t t-set="sum_none_tax_das_allowance"
+                                           t-value="sum_none_tax_das_allowance + doc.none_tax_das_allowance"/>
+                                    </t>
+                                    <t t-if="colum['sum_non_taxable']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.sum_non_taxable)"/>
+                                        </td>
+                                        <t t-set="sum_sum_non_taxable"
+                                           t-value="sum_sum_non_taxable + doc.sum_non_taxable"/>
+                                    </t>
+                                    <t t-if="colum['gross']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.gross)"/>
+                                        </td>
+                                        <t t-set="sum_gross" t-value="sum_gross + doc.gross"/>
+                                    </t>
+                                    <t t-if="colum['taxable_salary']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.taxable_salary)"/>
+                                        </td>
+                                        <t t-set="sum_taxable_salary"
+                                           t-value="sum_taxable_salary + doc.taxable_salary"/>
+                                    </t>
+                                    <t t-if="colum['tax']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.tax)"/>
+                                        </td>
+                                        <t t-set="sum_tax" t-value="sum_tax + doc.tax"/>
+                                    </t>
+                                    <t t-if="colum['pf_14']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.pf_14)"/>
+                                        </td>
+                                        <t t-set="sum_pf_14" t-value="sum_pf_14 + doc.pf_14"/>
+                                    </t>
+                                    <t t-if="colum['pension_18']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.pension_18)"/>
+                                        </td>
+                                        <t t-set="sum_pension_18" t-value="sum_pension_18 + doc.pension_18"/>
+                                    </t>
+                                    <t t-if="colum['different_deduction']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.different_deduction)"/>
+                                        </td>
+                                        <t t-set="sum_different_deduction"
+                                           t-value="sum_different_deduction + doc.different_deduction"/>
+                                    </t>
+                                    <t t-if="colum['total_payment']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.total_payment)"/>
+                                        </td>
+                                        <t t-set="sum_total_payment" t-value="sum_total_payment + doc.total_payment"/>
+                                    </t>
+                                    <t t-if="colum['total_adjusted_payout']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.total_adjusted_payout)"/>
+                                        </td>
+                                        <t t-set="sum_total_adjusted_payout"
+                                           t-value="sum_total_adjusted_payout + doc.total_adjusted_payout"/>
+                                    </t>
+                                    <t t-if="colum['expense']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.expense)"/>
+                                        </td>
+                                        <t t-set="sum_expense" t-value="sum_expense + doc.expense"/>
+
+                                    </t>
+                                    <t t-if="colum['loan']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.loan)"/>
+                                        </td>
+                                        <t t-set="sum_loan" t-value="sum_loan + doc.loan"/>
+                                    </t>
+                                    <t t-if="colum['advance_salary']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.advance_salary)"/>
+                                        </td>
+                                        <t t-set="sum_advance_salary"
+                                           t-value="sum_advance_salary + doc.advance_salary"/>
+                                    </t>
+                                    <t t-if="colum['total_deduction']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.total_deduction)"/>
+                                        </td>
+                                        <t t-set="sum_total_deduction"
+                                           t-value="sum_total_deduction + doc.total_deduction"/>
+                                    </t>
+                                    <t t-if="colum['total_non_taxable']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.total_non_taxable)"/>
+                                        </td>
+                                        <t t-set="sum_total_non_taxable"
+                                           t-value="sum_total_non_taxable + doc.total_non_taxable"/>
+                                    </t>
+
+                                    <t t-if="colum['net']">
+                                        <td class="text-end">
+                                            <t t-esc="'{:,.2f}'.format(doc.net)"/>
+                                        </td>
+                                        <t t-set="sum_net" t-value="sum_net + doc.net"/>
+                                    </t>
+                                    <td></td>
+                                </tr>
+                            </t>
+                            <!-- Total row -->
+                            <tr class="footer-row">
+                                <td colspan="2">Total</td>
+                                <t t-if="colum['department_id']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['tin_no']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['pension_no']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['employment_date']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['total_working_days']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['total_day_worked']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['bank_account_id']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['structure']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['payslip_run_name']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['payslip_name']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['income_task_region']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['pension_task_region']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['period']">
+                                    <td></td>
+                                </t>
+                                <t t-if="colum['monthly_basic_salary']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_monthly_basic_salary)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['basic_etb']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_basic_etb)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['pension']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_pension)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['pension_comp']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_pension_comp)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['provident_employee']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_provident_employee)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['provident_employer']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_provident_employer)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['total_provident']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_total_provident)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['travel_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_travel_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['desert_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_desert_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['hra']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_hra)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['cost_sharing']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(cost_sharing)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['other_deduction']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(other_deduction)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['position_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_position_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['representation_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_representation_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['cleaning_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_cleaning_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['other_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_other_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['meal_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_meal_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['medical_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_medical_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['communication_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_communication_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['internet_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_internet_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['fuel_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_fuel_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['unused_leave_payment']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_unused_leave_payment)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['severance_pay_compensation']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_severance_pay_compensation)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['training_development']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_training_development)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['bonus']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_bonus)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['overtime']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_overtime)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['additional']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_additional)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['dsa_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_dsa_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['tax_dsa_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_tax_dsa_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['travel_allowance_notax']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_travel_allowance_notax)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['non_tax_desert_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_non_tax_desert_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['non_tax_position_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_non_tax_position_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['non_tax_internet_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_non_tax_internet_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['non_tax_cleaning_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_non_tax_cleaning_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['non_tax_other_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_non_tax_other_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['sum_non_taxable']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_sum_non_taxable)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['none_tax_das_allowance']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_none_tax_das_allowance)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['gross']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_gross)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['taxable_salary']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_taxable_salary)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['tax']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_tax)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['pf_14']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_pf_14)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['pension_18']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_pension_18)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['different_deduction']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_different_deduction)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['total_payment']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_total_payment)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['total_adjusted_payout']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_total_adjusted_payout)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['expense']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_expense)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['loan']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_loan)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['advance_salary']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_advance_salary)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['total_deduction']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_total_deduction)"/>
+                                    </td>
+                                </t>
+                                <t t-if="colum['total_non_taxable']">
+                                    <td class="text-end">
+                                        <t t-esc="'{:,.2f}'.format(sum_total_non_taxable)"/>
+                                    </td>
+                                </t>
+
+                                <t t-if="colum['net']">
+                                    <td class="text-end">
+                                        <span t-esc="'{:,.2f}'.format(sum_net)"/>
+                                    </td>
+                                </t>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-3">
+                        <span>Prepared By</span>
+                        <br/>
+                        <span>Name :____________________</span>
+                        <br/>
+                        <span>Signature :_______________</span>
+                        <br/>
+                        <span>Date :____________________</span>
+                        <br/>
+
+                    </div>
+                    <div class="col-3">
+                        <span>Checked By</span>
+                        <br/>
+                        <span>Name :____________________</span>
+                        <br/>
+                        <span>Signature :_______________</span>
+                        <br/>
+                        <span>Date :____________________</span>
+                        <br/>
+
+                    </div>
+                    <div class="col-3">
+                        <span>Audited By</span>
+                        <br/>
+                        <span>Name :____________________</span>
+                        <br/>
+                        <span>Signature :_______________</span>
+                        <br/>
+                        <span>Date :____________________</span>
+                        <br/>
+                    </div>
+                    <div class="col-3">
+                        <span>Approved By</span>
+                        <br/>
+                        <span>Name :____________________</span>
+                        <br/>
+                        <span>Signature :_______________</span>
+                        <br/>
+                        <span>Date :____________________</span>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="payroll_report_action_id" model="ir.actions.report">
+        <field name="name">Payslip Payroll</field>
+        <field name="model">custom.hr.payroll.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_hr_payroll_report.hr_report_template_id</field>
+        <field name="report_file">custom_hr_payroll_report.hr_report_template_id</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+</odoo>
