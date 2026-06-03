@@ -156,9 +156,9 @@ class customHrPayrollReport(models.TransientModel):
             report_row = {
                 'payslip_id': pays.id,
                 'employee': pays.employee_id.name,
-                # 'tin_no' removed (field does not exist on hr.employee)
+                'tin_no': pays.employee_id.tin_no,
                 'department_id': pays.employee_id.department_id.id,
-                # 'pension_no' removed (field does not exist on hr.employee)
+                'pension_no': pays.employee_id.pension_no,
                 'employment_date': contract.date_start,
 
                 'payslip_run_name': pays.name,
