@@ -2,13 +2,11 @@ import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
-
 class ResPartnerBank(models.Model):
     _inherit = 'res.partner.bank'
     branch = fields.Char(string="Branch")
     location = fields.Char(string="Location")
     location_id = fields.Many2one('hr.work.location')
-
 
 class customHrPayrollReport(models.TransientModel):
     _name = "custom.hr.payroll.report"
@@ -85,7 +83,7 @@ class customHrPayrollReport(models.TransientModel):
     pension_18 = fields.Float(string="Pension 18")
     different_deduction = fields.Float(string="Different Deduction")
     other_allowance = fields.Float(string="Other Allowance")
-    non_tax_other_allowance = fields.Float(string="None Taxable  Other Allowance")
+    non_tax_other_allowance = fields.Float(string="None Taxable Other Allowance")
     total_non_taxable = fields.Float(string="Total none taxable")
     dsa_allowance = fields.Float(string="DSA Allowance")
     location_id = fields.Many2one('hr.work.location', string="Location", compute='_compute_location', store=True)
@@ -97,71 +95,60 @@ class customHrPayrollReport(models.TransientModel):
             'res_model': 'hr.payroll.report2',
             'view_mode': 'form',
             'target': 'new',
-            'context': {
-                'default_payroll_ids': self.ids,
-            }
+            'context': {'default_payroll_ids': self.ids}
         }
 
     def print_pdf_report(self):
+        """Added to fix the ParseError: action not found"""
         return {
             'type': 'ir.actions.act_window',
             'name': 'Report',
             'res_model': 'hr.payroll.report1',
             'view_mode': 'form',
             'target': 'new',
-            'context': {
-                'default_payroll_ids': self.ids,
-            }
+            'context': {'default_payroll_ids': self.ids}
         }
 
-    def fetch_and_update_report(self, date_from, date_to, department_id, location_id):
+    def fetch_and_update_report(self, date_from=None, date_to=None, department_id=None, location_id=None):
         last_update = datetime.datetime.now()
         default_company = self.env.user.company_id
         domain = ['|', ('company_id', '=', False), ('company_id', '=', default_company.id)]
-
         if date_from and date_to:
             domain += [('date_from', '>=', date_from), ('date_to', '<=', date_to)]
         if department_id:
             domain.append(('employee_id.department_id', '=', department_id.id))
         if location_id:
             domain.append(('employee_id.work_location_id', '=', location_id.id))
-
         payslips = self.env['hr.payslip'].search(domain, order='write_date desc')
         if len(payslips) > 0:
             last_update = payslips[0].write_date
-
         for pays in payslips:
-            # Force refresh of employee record to get latest data
-            employee = pays.employee_id.sudo()
             payroll_amount = self.update_payslips(pays.line_ids)
-            contract = employee.contract_id
+            contract = pays.employee_id.contract_id
             working_days = 0, 0
             total_worked_days = 0
-
             if date_from and date_to:
-                working_days = self.env['hr.attendance'].calculate_working_days(date_from, date_to,
-                                                                                contract.resource_calendar_id)
-                total_worked_days = self.env['hr.attendance'].compute_worked_days(employee, date_from, date_to,
-                                                                                  working_days[1])
+                working_days = self.env['hr.attendance'].calculate_working_days(date_from, date_to, contract.resource_calendar_id)
+                total_worked_days = self.env['hr.attendance'].compute_worked_days(pays.employee_id, date_from, date_to, working_days[1])
                 if working_days[0] < total_worked_days:
                     total_worked_days = working_days[0]
-
             report_row = {
                 'payslip_id': pays.id,
-                'employee': employee.name,
-                # FIXED: Force fetching updated fields from the live employee record
-                'tin_no': employee.tin_no,
-                'pension_no': employee.pension_no,
-                'department_id': employee.department_id.id,
+                'employee': pays.employee_id.name,
+                'employee_id': pays.employee_id.id,
+                'department_id': pays.employee_id.department_id.id,
                 'employment_date': contract.date_start,
                 'payslip_run_name': pays.name,
                 'monthly_basic_salary': contract.wage,
                 'total_working_days': working_days[0],
                 'total_day_worked': total_worked_days,
-                'bank_account_id': employee.bank_account_id.id,
+                'bank_account_id': pays.employee_id.bank_account_id.id,
                 'structure': pays.struct_id.name,
                 'period': pays.date_from.strftime('%Y-%m-%d') + " - " + pays.date_to.strftime('%Y-%m-%d'),
                 'payslip_name': pays.number,
+                # ✅ TIN and Pension pulled directly from employee
+                'tin_no': pays.employee_id.tin_no or '',
+                'pension_no': pays.employee_id.pension_no or '',
                 'basic': payroll_amount["basic"],
                 'basic_etb': payroll_amount["basic_etb"],
                 'taxable_salary': payroll_amount["taxable_salary"],
@@ -215,15 +202,13 @@ class customHrPayrollReport(models.TransientModel):
                 'created_on': pays.create_date,
                 'updated_on': pays.write_date,
                 'last_updated': last_update,
-                'location_id': employee.work_location_id.id,
+                'location_id': pays.employee_id.work_location_id.id,
             }
             self.env['custom.hr.payroll.report'].sudo().create(report_row)
 
-    # (Keep your existing refresh_report, confirm_payslip_status, return_payslip_detail, update_payslips, and _compute_location methods below unchanged)
     def refresh_report(self):
-        self.env['custom.hr.payroll.report'].search(
-            []).unlink()  # Fix: Target the transient model itself, not hr.payslip
-        self.fetch_and_update_report(False, False, False, False)
+        self.env['custom.hr.payroll.report'].search([]).unlink()
+        self.fetch_and_update_report()
 
     def confirm_payslip_status(self):
         for rec in self:
@@ -238,11 +223,76 @@ class customHrPayrollReport(models.TransientModel):
                 'view_mode': 'form,tree',
                 'target': 'current',
                 'res_id': rec.payslip_id.id,
-                'context': {'default_id': rec.payslip_id.id, }
+                'context': {'default_id': rec.payslip_id.id}
             }
 
     def update_payslips(self, payslip_lines):
-        # ... (keep your existing implementation)
+        payroll_amount = {
+            "basic": 0.0, "basic_etb": 0.0, "taxable_salary": 0.0, "gross": 0.0, "net": 0.0,
+            "pension": 0.0, "pension_comp": 0.0, "tax": 0.0, "total_deduction": 0.0, "overtime": 0.0,
+            "hra": 0.0, "da": 0.0, "travel_allowance": 0.0, "travel_allowance_notax": 0.0,
+            "meal_allowance": 0.0, "medical_allowance": 0.0, "communication_allowance": 0.0,
+            "internet_allowance": 0.0, 'non_tax_internet_allowance': 0.0, "fuel_allowance": 0.0,
+            "unused_leave_payment": 0.0, "severance_pay_compensation": 0.0, "training_development": 0.0,
+            "position_allowance": 0.0, "desert_allowance": 0.0, "other_deduction": 0.0,
+            "cost_sharing": 0.0, "representation_allowance": 0.0, "total_payment": 0.0,
+            "total_adjusted_payout": 0.0, "expense": 0.0, "loan": 0.0, "advance_salary": 0.0,
+            "non_tax_position_allowance": 0.0, "bonus": 0.0, "provident_employee": 0.0,
+            "provident_employer": 0.0, "total_provident": 0.0, 'cleaning_allowance': 0.0,
+            'sum_non_taxable': 0.0, 'none_tax_das_allowance': 0.0, 'tax_dsa_allowance': 0.0,
+            'additional': 0.0, 'pf_14': 0.0, 'pension_18': 0.0, 'different_deduction': 0.0,
+            'other_allowance': 0.0, 'total_non_taxable': 0.0, 'dsa_allowance': 0.0,
+        }
+        for line in payslip_lines:
+            if line.code == 'BASIC':
+                payroll_amount["basic"] = payroll_amount["basic_etb"] = line.amount
+            elif line.code == 'TTI': payroll_amount["taxable_salary"] = line.amount
+            elif line.code == 'GROSS': payroll_amount["gross"] = line.amount
+            elif line.code == 'NET': payroll_amount["net"] = line.amount
+            elif line.code == 'PENSION': payroll_amount["pension"] = line.amount
+            elif line.code == 'COMPPENSION': payroll_amount["pension_comp"] = line.amount
+            elif line.code == 'INCTAX': payroll_amount["tax"] = line.amount
+            elif line.code == 'TDED': payroll_amount["total_deduction"] = line.amount
+            elif line.code == 'OVERTIME': payroll_amount["overtime"] = line.amount
+            elif line.code == 'HRA': payroll_amount["hra"] = line.amount
+            elif line.code == 'DA': payroll_amount["da"] = line.amount
+            elif line.code == 'Travel': payroll_amount["travel_allowance"] = line.amount
+            elif line.code == 'NTravel': payroll_amount["travel_allowance_notax"] = line.amount
+            elif line.code == 'Csharing': payroll_amount["cost_sharing"] = line.amount
+            elif line.code == 'MEAL': payroll_amount["meal_allowance"] = line.amount
+            elif line.code == 'MEDICAL': payroll_amount["medical_allowance"] = line.amount
+            elif line.code == 'COMMUNICATION': payroll_amount["communication_allowance"] = line.amount
+            elif line.code == 'INA': payroll_amount["internet_allowance"] = line.amount
+            elif line.code == 'NTINA': payroll_amount["non_tax_internet_allowance"] = line.amount
+            elif line.code == 'CLEANALL': payroll_amount["cleaning_allowance"] = line.amount
+            elif line.code == 'NTCLEANALL': payroll_amount["non_tax_cleaning_allowance"] = line.amount
+            elif line.code == 'FUEL': payroll_amount["fuel_allowance"] = line.amount
+            elif line.code == 'ULP': payroll_amount["unused_leave_payment"] = line.amount
+            elif line.code == 'SEVERANCE': payroll_amount["severance_pay_compensation"] = line.amount
+            elif line.code == 'TRAINING': payroll_amount["training_development"] = line.amount
+            elif line.code == 'POSITION': payroll_amount["position_allowance"] = line.amount
+            elif line.code == 'NTPOSITION': payroll_amount["non_tax_position_allowance"] = line.amount
+            elif line.code == 'DESALL': payroll_amount["desert_allowance"] = line.amount
+            elif line.code == 'NTDESALL': payroll_amount["non_tax_desert_allowance"] = line.amount
+            elif line.code == 'REPRESENTATION': payroll_amount["representation_allowance"] = line.amount
+            elif line.code == 'EXPENSE': payroll_amount["expense"] = line.amount
+            elif line.code == 'LOAN': payroll_amount["loan"] = line.amount
+            elif line.code == 'ADVANCE_SALARY': payroll_amount["advance_salary"] = line.amount
+            elif line.code == 'BONUS': payroll_amount["bonus"] = line.amount
+            elif line.code == 'SEVPAY': payroll_amount["total_payment"] = line.amount
+            elif line.code == 'Severance Tax Payment': payroll_amount["total_adjusted_payout"] = line.amount
+            elif line.code == 'EMPR': payroll_amount["provident_employee"] = line.amount
+            elif line.code == 'EPRNT': payroll_amount["provident_employer"] = line.amount
+            elif line.code == 'SUMTA': payroll_amount["sum_non_taxable"] = line.amount
+            elif line.code == 'TAXDSA': payroll_amount["none_tax_das_allowance"] = line.amount
+            elif line.code == 'TAXANDDSA': payroll_amount["tax_dsa_allowance"] = line.amount
+            elif line.code == 'ADDITIONAL': payroll_amount["additional"] = line.amount
+            elif line.code == 'PF14': payroll_amount["pf_14"] = line.amount
+            elif line.code == 'PENSION18': payroll_amount["pension_18"] = line.amount
+            elif line.code == 'DIFFALL': payroll_amount["different_deduction"] = line.amount
+            elif line.code == 'OTHERALL': payroll_amount["other_allowance"] = line.amount
+            elif line.code == 'TNTAX': payroll_amount["total_non_taxable"] = line.amount
+            elif line.code == 'DSAALL': payroll_amount["dsa_allowance"] = line.amount
         return payroll_amount
 
     @api.depends('employee_id')
