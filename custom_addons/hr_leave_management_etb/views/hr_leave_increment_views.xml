@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Form View ── -->
+    <record id="hr_leave_increment_rule_form_view" model="ir.ui.view">
+        <field name="name">hr.leave.increment.rule.form</field>
+        <field name="model">hr.leave.increment.rule</field>
+        <field name="arch" type="xml">
+            <form string="Leave Increment Rule">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="years_of_service"
+                                   help="Employees with AT LEAST this many years of service qualify."/>
+                            <field name="additional_days"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <div class="alert alert-info" role="alert">
+                                <strong>How it works:</strong><br/>
+                                When an employee has served <em>at least</em> the specified
+                                number of years, they receive the corresponding additional
+                                leave days on top of their base entitlement.<br/><br/>
+                                The system automatically applies the
+                                <strong>highest qualifying rule</strong>.
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Tree/List View ── -->
+    <record id="hr_leave_increment_rule_list_view" model="ir.ui.view">
+        <field name="name">hr.leave.increment.rule.list</field>
+        <field name="model">hr.leave.increment.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Leave Increment Rules" editable="bottom">
+                <field name="name"/>
+                <field name="years_of_service" string="Min. Years of Service"/>
+                <field name="additional_days" string="Extra Days Granted"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ── Window Action ── -->
+    <record id="action_hr_leave_increment_rule" model="ir.actions.act_window">
+        <field name="name">Leave Increment Rules</field>
+        <field name="res_model">hr.leave.increment.rule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No increment rules defined yet.
+            </p>
+            <p>
+                Define rules to automatically add extra leave days based on
+                an employee's years of service.
+            </p>
+        </field>
+    </record>
+
+</odoo>
