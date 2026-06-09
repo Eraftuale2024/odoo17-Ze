@@ -47,6 +47,7 @@
                 <field name="provident_employer" optional="show" sum="Total"/>
                 <field name="total_provident" optional="hide" sum="Total"/>
                 <field name="travel_allowance" optional="show" sum="Total"/>
+                <field name="transportation_allowance" optional="show" sum="Total"/>
                 <field name="desert_allowance" optional="hide" sum="Total"/>
                 <field name="other_deduction" optional="show" sum="Total"/>
                 <field name="cost_sharing" optional="show" sum="Total"/>

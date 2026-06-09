@@ -48,8 +48,12 @@
                     </div>
                     <label for="travel_allowance"/>
                     <div class="o_row">
-
-                        <field name="travel_allowance" string="Transportation Allowance" nolabel="1"/>
+                        <field name="travel_allowance" string="Travel Allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="transportation_allowance"/>
+                    <div class="o_row">
+                        <field name="transportation_allowance" nolabel="1"/>
                         <span>/ month</span>
                     </div>
                     <label for="meal_allowance"/>

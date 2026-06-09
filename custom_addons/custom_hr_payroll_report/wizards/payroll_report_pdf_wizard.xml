@@ -138,6 +138,10 @@
                         <div class="o_col_2">
                             <label for="travel_allowance_notax" string="Transportation(N Taxable)"/>
                             <field name="travel_allowance_notax" nolabel="1"/>
+                            <div class="o_col_2">
+                           <label for="transportation_allowance"/>
+                           <field name="transportation_allowance" nolabel="1"/>
+                        </div>
                         </div>
                         <div class="o_col_2">
                             <label for="meal_allowance"/>

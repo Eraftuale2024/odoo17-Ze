@@ -41,6 +41,7 @@ class customHrPayrollReport(models.TransientModel):
     da = fields.Float(string="Position Allowance")
     travel_allowance = fields.Float(string="Transport Allowance")
     travel_allowance_notax = fields.Float(string="None Taxable Transport Allowance")
+    transportation_allowance = fields.Float(string="Transportation Allowance")
     meal_allowance = fields.Float(string="Provision For Leave")
     medical_allowance = fields.Float(string="Medical Insurance")
     communication_allowance = fields.Float(string="Communication Allowance")
@@ -163,6 +164,7 @@ class customHrPayrollReport(models.TransientModel):
                 'da': payroll_amount["da"],
                 'travel_allowance': payroll_amount["travel_allowance"],
                 'travel_allowance_notax': payroll_amount["travel_allowance_notax"],
+                'transportation_allowance': contract.transportation_allowance,
                 'meal_allowance': payroll_amount["meal_allowance"],
                 'medical_allowance': payroll_amount["medical_allowance"],
                 'communication_allowance': payroll_amount["communication_allowance"],

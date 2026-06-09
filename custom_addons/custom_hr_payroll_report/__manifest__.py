@@ -1,6 +1,6 @@
 {
     'name': 'Custom Payroll Report',
-    'version': '1.0',
+    'version': '17.0',
     'summary': 'Custom Payroll Report',
     'sequence': 100,
     'description': """

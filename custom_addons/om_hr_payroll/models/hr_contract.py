@@ -26,6 +26,7 @@ class HrContract(models.Model):
     resource_calendar_id = fields.Many2one(required=True, help="Employee's working schedule.")
     hra = fields.Monetary(string='HRA', help="House rent allowance.")
     travel_allowance = fields.Monetary(string="Travel Allowance", help="Travel allowance")
+    transportation_allowance = fields.Monetary(string="Transportation Allowance", help="Transportation allowance")
     da = fields.Monetary(string="DA", help="Dearness allowance")
     meal_allowance = fields.Monetary(string="Meal Allowance", help="Meal allowance")
     medical_allowance = fields.Monetary(string="Medical Allowance", help="Medical allowance")

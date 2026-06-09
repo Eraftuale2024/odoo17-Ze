@@ -38,6 +38,7 @@ class PayrollReportWizard(models.TransientModel):
     da = fields.Boolean(string="Position Allowance", default=True)
     travel_allowance = fields.Boolean(string="Transport Allowance", default=True)
     travel_allowance_notax = fields.Boolean(string="None Taxable Transport Allowance", default=True)
+    transportation_allowance = fields.Boolean(string="Transportation Allowance", default=True)  # NEW
     meal_allowance = fields.Boolean(string="Provision For Leave")
     medical_allowance = fields.Boolean(string="Medical Insurance")
     communication_allowance = fields.Boolean(string="Communication Allowance")
@@ -85,9 +86,6 @@ class PayrollReportWizard(models.TransientModel):
     payroll_ids = fields.Many2many("custom.hr.payroll.report")
 
 
-
-
-
     def action_print_report(self):
         data = {
             'payroll_ids': self.payroll_ids.ids,
@@ -96,7 +94,6 @@ class PayrollReportWizard(models.TransientModel):
             'tin_no': self.tin_no,
             'pension_no': self.pension_no,
             'employment_date': self.employment_date,
-
             'department_id': self.department_id,
             'bank_account_id': self.bank_account_id,
             'period': self.period,
@@ -119,6 +116,7 @@ class PayrollReportWizard(models.TransientModel):
             'da': self.da,
             'travel_allowance': self.travel_allowance,
             'travel_allowance_notax': self.travel_allowance_notax,
+            'transportation_allowance': self.transportation_allowance,  # NEW
             'meal_allowance': self.meal_allowance,
             'medical_allowance': self.medical_allowance,
             'communication_allowance': self.communication_allowance,
@@ -195,7 +193,6 @@ class HrPayrollReportPDF(models.AbstractModel):
             'tin_no': data.get('tin_no'),
             'pension_no': data.get('pension_no'),
             'employment_date': data.get('employment_date'),
-
             'department_id': data.get('department_id'),
             'bank_account_id': data.get('bank_account_id'),
             'period': data.get('period'),
@@ -218,6 +215,7 @@ class HrPayrollReportPDF(models.AbstractModel):
             'da': data.get('da'),
             'travel_allowance': data.get('travel_allowance'),
             'travel_allowance_notax': data.get('travel_allowance_notax'),
+            'transportation_allowance': data.get('transportation_allowance'),  # NEW
             'meal_allowance': data.get('meal_allowance'),
             'medical_allowance': data.get('medical_allowance'),
             'communication_allowance': data.get('communication_allowance'),
@@ -272,5 +270,3 @@ class HrPayrollReportPDF(models.AbstractModel):
             'datas': data,
             'colum': colum,
         }
-
-
