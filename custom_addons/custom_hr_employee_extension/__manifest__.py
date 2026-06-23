@@ -6,9 +6,11 @@
     'author': 'Abraham Getachew',
     'depends': [
         'hr',
+      'hr_contract'
     ],
     'data': [
         'views/hr_employee_views.xml',
+        'views/hr_contract_views.xml'
     ],
     'installable': True,
     'application': False,
