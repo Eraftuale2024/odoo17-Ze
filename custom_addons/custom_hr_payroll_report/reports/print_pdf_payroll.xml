@@ -58,7 +58,7 @@
 
                 <div style="page-break-before: always;">
                    <div class="text-header" style="text-align: center;">
-                    <h4>Ethiopia Securities Exchange</h4>
+                    <h4>Dhakabora Engineering</h4>
 
                     <h5> Payroll For the Month of <t t-esc="colum['date']"/> </h5>
 

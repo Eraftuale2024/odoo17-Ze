@@ -41,7 +41,7 @@
             </style>
             <div class="page">
                 <div class="text-header">
-                    <h3>Ethiopia Securities Exchange</h3>
+                    <h3>Dhakabora Engineering</h3>
 
                     <h5>Payroll For the Month of
                         <t t-esc="colum['month']"/>
