@@ -28,6 +28,8 @@ jobs:
             git pull origin main
             
             echo "2. Odoo Containers ko reload kiya ja raha hai..."
-            docker compose -f prod-docker-compose.yml up -d --build
+            docker compose -f prod-docker-compose.yml down
+            docker compose -f prod-docker-compose.yml up -d --build --force-recreate
+
             
             echo "==== Deployment Successful! Odoo Live Hai ===="
