@@ -9,3 +9,15 @@ class HrContract(models.Model):
         store=False,
         readonly=False,
     )
+
+    max_variable_pay = fields.Float(
+        string="Max Variable Pay",
+        default=0.0,
+        help="Fixed maximum variable pay ceiling for this employee"
+    )
+
+    achievement_percent = fields.Float(
+        string="Achievement (%)",
+        default=0.0,
+        help="Achievement percentage this period (0–100)"
+    )
