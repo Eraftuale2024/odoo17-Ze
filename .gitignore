@@ -1,0 +1,21 @@
+# PyCharm
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Odoo
+*.log
+*.log.*
+
+# Environment
+.env
+venv/
+.venv/
+
+# OS
+Thumbs.db
+.DS_Store

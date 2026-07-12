@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_leave_entitlement_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.leave.entitlement.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <!-- ── Smart Button ── -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_leave_entitlements"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-calendar-check-o">
+                    <div class="o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="leave_entitlement_count"/>
+                        </span>
+                        <span class="o_stat_text">Leave Records</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- ── Notebook Tab ── -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Leave Entitlement (ETB)" name="leave_entitlement_etb">
+                    <group string="Current Year Summary">
+                        <group>
+                            <field name="current_leave_remaining"
+                                   string="Remaining Leave Days (This Year)"
+                                   readonly="1"/>
+                            <field name="current_leave_remaining_value"
+                                   string="Remaining Leave Value - ETB (This Year)"
+                                   readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- ── Inline tree: must use <tree> not <list> ── -->
+                    <field name="leave_entitlement_ids" readonly="1">
+                        <tree>
+                            <field name="year"/>
+                            <field name="total_entitlement" string="Total (Days)"/>
+                            <field name="leave_days_used" string="Used (Days)"/>
+                            <field name="leave_days_remaining" string="Remaining (Days)"/>
+                            <field name="daily_rate" string="Daily Rate (ETB)" digits="[16,4]"/>
+                            <field name="leave_monetary_value" string="Full Value (ETB)"/>
+                            <field name="remaining_leave_value" string="Remaining Value (ETB)"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

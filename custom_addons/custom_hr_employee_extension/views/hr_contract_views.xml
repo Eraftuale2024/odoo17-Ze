@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_view_form_inherit_dob" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit.dob</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="employee_dob" string="Date of Birth"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_contract_view_form_variable_pay" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.variable.pay</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="priority">25</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='salary_info']" position="after">
+                <group string="Monthly Advantages in Cash" name="variable_pay_advantages">
+                    <label for="max_variable_pay" string="Max Variable Pay"/>
+                    <div class="o_row">
+                        <field name="max_variable_pay" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="achievement_percent" string="Achievement (%)"/>
+                    <div class="o_row">
+                        <field name="achievement_percent" nolabel="1"/>
+                        <span>%</span>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

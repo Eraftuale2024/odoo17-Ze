@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_bank_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.bank.inherit</field>
+        <field name="model">res.partner.bank</field>
+        <field name="inherit_id" ref="base.view_partner_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acc_holder_name']" position="after">
+                <field name="branch"/>
+            </xpath>
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="location"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="custom_hr_payroll_report_tree_view" model="ir.ui.view">
+        <field name="name">custom.hr.payroll.report</field>
+        <field name="model">custom.hr.payroll.report</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="status in ('done')" decoration-muted="status == 'cancel'">
+                <header>
+                    <button name="confirm_payslip_status" string="Confirm" type="object" class="oe_highlight"/>
+                    <button name="print_pdf_report" string="Print Bank Letter" type="object" class="oe_highlight"/>
+                    <button name="print_payroll_pdf_report" string="Print PDF" type="object" class="oe_highlight"/>
+                </header>
+                <field name="employee" optional="show"/>
+                <field name="department_id" optional="hide"/>
+                <field name="location_id" optional="hide"/>
+                <field name="tin_no" optional="hide"/>
+                <field name="pension_no" optional="hide"/>
+                <field name="employment_date" optional="hide"/>
+                <field name="total_working_days" optional="hide"/>
+                <field name="total_day_worked" optional="hide"/>
+                <field name="bank_account_id" optional="hide"/>
+                <field name="structure" optional="hide"/>
+                <field name="payslip_run_name" optional="hide"/>
+                <field name="payslip_name" optional="hide"/>
+                <field name="income_task_region" optional="hide"/>
+                <field name="pension_task_region" optional="hide"/>
+                <field name="period" optional="hide"/>
+                <field name="monthly_basic_salary" optional="hide" sum="Total"/>
+                <field name="basic_etb" optional="show" sum="Total"/>
+                <field name="pension" optional="hide" sum="Total"/>
+                <field name="pension_comp" optional="show" sum="Total"/>
+                <field name="provident_employee" optional="hide" sum="Total"/>
+                <field name="provident_employer" optional="show" sum="Total"/>
+                <field name="total_provident" optional="hide" sum="Total"/>
+                <field name="travel_allowance" optional="show" sum="Total"/>
+                <field name="transportation_allowance" optional="show" sum="Total"/>
+                <field name="desert_allowance" optional="hide" sum="Total"/>
+                <field name="other_deduction" optional="show" sum="Total"/>
+                <field name="cost_sharing" optional="show" sum="Total"/>
+                <field name="hra" optional="show" sum="Total"/>
+                <field name="position_allowance" optional="hide" sum="Total"/>
+                <field name="representation_allowance" optional="hide" sum="Total"/>
+                <field name="cleaning_allowance" optional="hide" sum="Total"/>
+                <field name="other_allowance" optional="hide" sum="Total"/>
+                <field name="meal_allowance" optional="hide" sum="Total"/>
+                <field name="medical_allowance" optional="hide" sum="Total"/>
+                <field name="communication_allowance" optional="hide" sum="Total"/>
+                <field name="internet_allowance" optional="show" sum="Total"/>
+                <field name="fuel_allowance" optional="show" sum="Total"/>
+                <field name="unused_leave_payment" optional="hide" sum="Total"/>
+                <field name="severance_pay_compensation" optional="hide" sum="Total"/>
+                <field name="training_development" optional="hide" sum="Total"/>
+                <field name="bonus" optional="hide" sum="Total"/>
+                <field name="overtime" optional="hide" sum="Total"/>
+                <field name="additional" optional="hide" sum="Total"/>
+                <field name="tax_dsa_allowance" optional="hide" sum="Total"/>
+                <field name="travel_allowance_notax" optional="show" sum="Total"/>
+                <field name="non_tax_desert_allowance" optional="show" sum="Total"/>
+                <field name="non_tax_position_allowance" optional="show" sum="Total"/>
+                <field name="non_tax_internet_allowance" optional="show" sum="Total"/>
+                <field name="non_tax_cleaning_allowance" optional="show" sum="Total"/>
+                <field name="non_tax_other_allowance" optional="show" sum="Total"/>
+                <field name="sum_non_taxable" optional="show" sum="Total"/>
+                <field name="gross" optional="show" sum="Total"/>
+                <field name="taxable_salary" optional="show" sum="Total"/>
+                <field name="tax" optional="show" sum="Total"/>
+                <field name="pf_14" optional="show" sum="Total"/>
+                <field name="pension_18" optional="show" sum="Total"/>
+                <field name="different_deduction" optional="show" sum="Total"/>
+                <field name="total_payment" optional="hide" sum="Total"/>
+                <field name="total_adjusted_payout" optional="hide" sum="Total"/>
+                <field name="expense" optional="hide" sum="Total"/>
+                <field name="loan" optional="hide" sum="Total"/>
+                <field name="advance_salary" optional="hide" sum="Total"/>
+                <field name="total_deduction" optional="show" sum="Total"/>
+                <field name="total_non_taxable" optional="show" sum="Total"/>
+                <field name="dsa_allowance" optional="show" sum="Total"/>
+                <field name="net" optional="hide" sum="Total"/>
+                <field name="updated_on" invisible="1"/>
+                <field name="status" invisible="1"/>
+                <button type="object" name="return_payslip_detail" string="Open" icon="fa-edit"/>
+            </tree>
+        </field>
+    </record>
+    <record id="custom_hr_payroll_report_search_view" model="ir.ui.view">
+        <field name="name">Search</field>
+        <field name="model">custom.hr.payroll.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="posted" string="Posted Payroll" domain="[('status', '=', 'done')]"/>
+                <filter name="draft" string="Draft Payroll" domain="[('status', '=', 'draft')]"/>
+                <separator/>
+                <separator/>
+                <filter name="today_report" string="Today's Report" domain="[('updated_on','>',(context_today() + datetime.timedelta(-1)).strftime('%Y-%m-%d'))]"/>
+                <filter name="this_week_report" string="This Week Report" domain="[('updated_on','>',(context_today() + datetime.timedelta(-7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="this_month_report" string="This Month Report" domain="[('updated_on','>',(context_today()+ datetime.timedelta(-30)).strftime('%Y-%m-%d'))]"/>
+            </search>
+        </field>
+    </record>
+    <record id="custom_hr_payroll_report_action_id" model="ir.actions.act_window">
+        <field name="name">Custom Employee Payroll Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">custom.hr.payroll.report</field>
+        <field name="view_mode">tree</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+
+    <menuitem id="custom_hr_report_menu_id" name="Report" parent="om_hr_payroll.menu_hr_payroll_root" sequence="18" />
+    <menuitem id="custom_hr_report_submenu_id" name="Last Report" parent="custom_hr_report_menu_id" action="custom_hr_payroll_report_action_id" sequence="1"/>
+</odoo>

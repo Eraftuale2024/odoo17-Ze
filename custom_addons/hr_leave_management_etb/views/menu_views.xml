@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Our own submenu under Time Off root ── -->
+    <menuitem id="menu_hr_leave_etb_root"
+              name="Leave ETB"
+              parent="hr_holidays.menu_hr_holidays_root"
+              sequence="98"/>
+
+    <!-- ── Leave Entitlements ── -->
+    <menuitem id="menu_hr_leave_entitlements"
+              name="Leave Entitlements"
+              parent="menu_hr_leave_etb_root"
+              action="action_hr_leave_entitlement"
+              sequence="10"/>
+
+    <!-- ── Leave Increment Rules ── -->
+    <menuitem id="menu_hr_leave_increment_rules"
+              name="Leave Increment Rules"
+              parent="menu_hr_leave_etb_root"
+              action="action_hr_leave_increment_rule"
+              sequence="20"/>
+
+</odoo>

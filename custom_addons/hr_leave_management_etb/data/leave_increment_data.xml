@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!--
+        Default leave increment rules.
+        Based on Ethiopian Labour Proclamation No. 1156/2019, Article 61:
+        14 working days base + 1 extra day per additional year of service.
+        Adjust to match your organisation's policy.
+    -->
+
+    <record id="leave_increment_rule_1" model="hr.leave.increment.rule">
+        <field name="name">1+ Years of Service</field>
+        <field name="years_of_service">1</field>
+        <field name="additional_days">1</field>
+    </record>
+
+    <record id="leave_increment_rule_2" model="hr.leave.increment.rule">
+        <field name="name">2+ Years of Service</field>
+        <field name="years_of_service">2</field>
+        <field name="additional_days">2</field>
+    </record>
+
+    <record id="leave_increment_rule_3" model="hr.leave.increment.rule">
+        <field name="name">3+ Years of Service</field>
+        <field name="years_of_service">3</field>
+        <field name="additional_days">3</field>
+    </record>
+
+    <record id="leave_increment_rule_4" model="hr.leave.increment.rule">
+        <field name="name">4+ Years of Service</field>
+        <field name="years_of_service">4</field>
+        <field name="additional_days">4</field>
+    </record>
+
+    <record id="leave_increment_rule_5" model="hr.leave.increment.rule">
+        <field name="name">5+ Years of Service</field>
+        <field name="years_of_service">5</field>
+        <field name="additional_days">5</field>
+    </record>
+
+    <record id="leave_increment_rule_10" model="hr.leave.increment.rule">
+        <field name="name">10+ Years of Service</field>
+        <field name="years_of_service">10</field>
+        <field name="additional_days">10</field>
+    </record>
+
+    <record id="leave_increment_rule_15" model="hr.leave.increment.rule">
+        <field name="name">15+ Years of Service</field>
+        <field name="years_of_service">15</field>
+        <field name="additional_days">15</field>
+    </record>
+
+    <record id="leave_increment_rule_20" model="hr.leave.increment.rule">
+        <field name="name">20+ Years of Service</field>
+        <field name="years_of_service">20</field>
+        <field name="additional_days">20</field>
+    </record>
+
+</odoo>

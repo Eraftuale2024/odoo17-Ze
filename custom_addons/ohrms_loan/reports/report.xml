@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_hr_loan_pdf" model="ir.actions.report">
+            <field name="name">HR Loan</field>
+            <field name="model">hr.loan</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">ohrms_loan.report_hr_loan</field>
+            <field name="report_file">ohrms_loan.report_hr_loan</field>
+            <field name="print_report_name">'HR Loan - %s' % (object.employee_id.name)</field>
+            <field name="binding_model_id" ref="model_hr_loan"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

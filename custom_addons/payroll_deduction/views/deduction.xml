@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extension Action -->
+    <record id="deduction_request_action" model="ir.actions.act_window">
+        <field name="name">deduction</field>
+        <field name="res_model">hr.deduction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Deduction request
+            </p>
+        </field>
+    </record>
+
+    <!-- Extension Tree View -->
+    <record id="overtime_request_view_tree" model="ir.ui.view">
+        <field name="name">Deduction</field>
+        <field name="model">hr.deduction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="requested_by"/>
+                <field name="state"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Extension Form View -->
+    <record id="overtime_request_view_form" model="ir.ui.view">
+        <field name="name">deduction</field>
+        <field name="model">hr.deduction</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit"
+                            string="Submit"
+                            type="object"
+                            class="btn-primary"
+                            groups="hr_overtime.hr_overtime_group_submit"
+                            invisible="state not in ['draft']"/>
+                    <button name="action_review"
+                            string="Review"
+                            type="object"
+                            class="btn-primary"
+                           groups="hr_overtime.hr_overtime_group_under_review"
+                            invisible="state not in ['submit']"/>
+                    <button name="action_approve"
+                            string="Approve"
+                            type="object"
+                            class="btn-primary"
+                            groups="hr_overtime.hr_overtime_group_approve"
+                            invisible="state not in ['review']"/>
+                    <button name="action_reject"
+                            string="Reject"
+                            type="object"
+                            groups="hr_overtime.hr_overtime_group_reject"
+                            invisible="state in ['approve']"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="overtime request">
+                        <group>
+                           <field name="requested_by" readonly="approve_by"/>
+                           <field name="date" readonly="approve_by"/>
+                           <field name="review_by" readonly="1" invisible="not review_by"/>
+                         </group>
+                         <group>
+                            <field name="state" readonly="1"/>
+                            <field name="approve_by" readonly="1" invisible="not approve_by"/>
+                            <field name="reject_by" readonly="1" invisible="not reject_by"/>
+                        </group>
+                    </group>
+                      <notebook>
+                        <page string="Employees" name="employee">
+                            <field name="employee_ids" widget="section_and_note_one2many"  readonly="approve_by"
+                                mode="tree,kanban,form" >
+                                <tree string="Employee Lines" editable="bottom" delete="0">
+                                    <control>
+                                        <create name="add_product_control" string="Add a Line" />
+                                    </control>
+                                    <field name="employee_id" />
+                                    <field name="reason"/>
+                                    <field name="amount"/>
+<!--                                    <field name="hours"/>-->
+                                    <field name="remark"/>
+                                </tree>
+                            </field>
+                        </page>
+                          
+                      </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="hr_deduction_root"
+            name="Deduction"
+            parent="hr.menu_hr_root"
+            sequence="22"/>
+
+         <menuitem
+            id="hr_deduction_root_action"
+            name="Deduction"
+            action="deduction_request_action"
+            parent="hr_deduction_root"
+            sequence="22"/>
+
+</odoo>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="hr_payroll_pdf_report_form_view">
+        <field name="name">custom_hr_payroll_report.pdf.report.form.view</field>
+        <field name="model">hr.payroll.report2</field>
+        <field name="arch" type="xml">
+            <form string="PDF Report">
+                <div class="basic_information">
+                    <h3>Basic Information</h3>
+                    <hr/>
+                    <!-- First row with 5 fields -->
+                    <div class="o_row">
+                        <div class="o_col_4">
+                            <label for="month"/>
+                            <field name="month" nolabel="1"/>
+                        </div>
+                        <div class="o_col_4">
+                            <label for="tin_no"/>
+                            <field name="tin_no" nolabel="1"/>
+                        </div>
+                        <div class="o_col_4">
+                            <label for="pension_no"/>
+                            <field name="pension_no" nolabel="1"/>
+                        </div>
+                        <div class="o_col_4">
+                            <label for="employment_date"/>
+                            <field name="employment_date" nolabel="1"/>
+                        </div>
+                    </div>
+
+                    <div class="o_row">
+                        <div class="o_col_2">
+                            <label for="employee"/>
+                            <field name="employee" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="department_id"/>
+                            <field name="department_id" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="bank_account_id"/>
+                            <field name="bank_account_id" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="period"/>
+                            <field name="period" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="total_non_taxable"/>
+                            <field name="total_non_taxable" nolabel="1"/>
+                        </div>
+                    </div>
+
+                    <!-- Second row with 5 fields -->
+                    <div class="o_row">
+                        <div class="o_col_2">
+                            <label for="total_working_days"/>
+                            <field name="total_working_days" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="total_day_worked"/>
+                            <field name="total_day_worked" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="payslip_run_name"/>
+                            <field name="payslip_run_name" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="structure"/>
+                            <field name="structure" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="payslip_name"/>
+                            <field name="payslip_name" nolabel="1"/>
+                        </div>
+                    </div>
+                    <div class="o_row">
+                        <div class="o_col_2">
+                            <label for="monthly_basic_salary"/>
+                            <field name="monthly_basic_salary" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="basic_etb"/>
+                            <field name="basic_etb" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="gross"/>
+                            <field name="gross" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="taxable_salary"/>
+                            <field name="taxable_salary" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="net"/>
+                            <field name="net" nolabel="1"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="allowance_information">
+                    <h3>Allowance and Deduction Information</h3>
+                    <hr/>
+                    <!-- Third row with 5 fields -->
+                    <div class="o_row">
+                        <div class="o_col_2">
+                            <label for="pension_comp"/>
+                            <field name="pension_comp" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="tax"/>
+                            <field name="tax" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="total_deduction"/>
+                            <field name="total_deduction" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="overtime"/>
+                            <field name="overtime" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="hra"/>
+                            <field name="hra" nolabel="1"/>
+                        </div>
+                    </div>
+
+                    <!-- fourth row-->
+                    <div class="o_row">
+                        <div class="o_col_2">
+                            <label for="da"/>
+                            <field name="da" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="travel_allowance" string="Transportation(taxable)"/>
+                            <field name="travel_allowance" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="travel_allowance_notax" string="Transportation(N Taxable)"/>
+                            <field name="travel_allowance_notax" nolabel="1"/>
+                            <div class="o_col_2">
+                           <label for="transportation_allowance"/>
+                           <field name="transportation_allowance" nolabel="1"/>
+                        </div>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="meal_allowance"/>
+                            <field name="meal_allowance" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="medical_allowance"/>
+                            <field name="medical_allowance" nolabel="1"/>
+                        </div>
+                    </div>
+
+                    <!--fifth one                -->
+                    <div class="o_row">
+                        <div class="o_col_2">
+                            <label for="communication_allowance" string="Communication"/>
+                            <field name="communication_allowance" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="internet_allowance"/>
+                            <field name="internet_allowance" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="fuel_allowance"/>
+                            <field name="fuel_allowance" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="unused_leave_payment"/>
+                            <field name="unused_leave_payment" nolabel="1"/>
+                        </div>
+                        <div class="o_col_2">
+                            <label for="severance_pay_compensation" string="Severance Compensation"/>
+                            <field name="severance_pay_compensation" nolabel="1"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- six  -->
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="training_development" string="Training"/>
+                        <field name="training_development" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="position_allowance"/>
+                        <field name="position_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="desert_allowance"/>
+                        <field name="desert_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="representation_allowance"/>
+                        <field name="representation_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="pension"/>
+                        <field name="pension" nolabel="1"/>
+                    </div>
+                </div>
+                <!--7-->
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="total_payment"/>
+                        <field name="total_payment" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="total_adjusted_payout"/>
+                        <field name="total_adjusted_payout" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="expense"/>
+                        <field name="expense" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="loan"/>
+                        <field name="loan" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="advance_salary"/>
+                        <field name="advance_salary" nolabel="1"/>
+                    </div>
+                </div>
+                <!--8-->
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="bonus"/>
+                        <field name="bonus" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="provident_employee"/>
+                        <field name="provident_employee" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="provident_employer"/>
+                        <field name="provident_employer" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="total_provident"/>
+                        <field name="total_provident" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="tin_no"/>
+                        <field name="tin_no" nolabel="1"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="non_tax_internet_allowance"/>
+                        <field name="non_tax_internet_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="non_tax_position_allowance"/>
+                        <field name="non_tax_position_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="non_tax_desert_allowance"/>
+                        <field name="non_tax_desert_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="cleaning_allowance"/>
+                        <field name="cleaning_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="non_tax_cleaning_allowance"/>
+                        <field name="non_tax_cleaning_allowance" nolabel="1"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="sum_non_taxable"/>
+                        <field name="sum_non_taxable" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="none_tax_das_allowance"/>
+                        <field name="none_tax_das_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="tax_dsa_allowance"/>
+                        <field name="tax_dsa_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="additional"/>
+                        <field name="additional" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="pf_14"/>
+                        <field name="pf_14" nolabel="1"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="pension_18"/>
+                        <field name="pension_18" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="different_deduction"/>
+                        <field name="different_deduction" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="other_allowance"/>
+                        <field name="other_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="non_tax_other_allowance"/>
+                        <field name="non_tax_other_allowance" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="dsa_allowance"/>
+                        <field name="dsa_allowance" nolabel="1"/>
+                    </div>
+                </div>
+                <div class="o_row">
+                    <div class="o_col_2">
+                        <label for="other_deduction"/>
+                        <field name="other_deduction" nolabel="1"/>
+                    </div>
+                    <div class="o_col_2">
+                        <label for="cost_sharing"/>
+                        <field name="cost_sharing" nolabel="1"/>
+                    </div>
+                </div>
+
+                <!-- Form footer with Print and Cancel buttons -->
+                <footer>
+                    <button string="Print" name="action_print_report" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_payroll_pdf_report_action_id" model="ir.actions.act_window">
+        <field name="name">PDF Report</field>
+        <field name="res_model">hr.payroll.report2</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,35 @@
+<!-- om_hr_payroll_custom/views/hr_payslip_custom_view.xml -->
+
+<odoo>
+    <data>
+        <!-- Inheriting the existing view -->
+        <record id="view_hr_payslip_by_employees_custom" model="ir.ui.view">
+            <field name="name">hr.payslip.by.employees.custom</field>
+            <field name="model">hr.payslip.employees</field>
+            <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_by_employees"/>
+            <field name="arch" type="xml">
+
+                <!-- Replacing the form structure -->
+                <xpath expr="//form" position="replace">
+                    <form string="Payslips by Employees">
+                        <header>
+                            <button icon="fa-cogs" string="Generate" name="compute_sheet" type="object" class="oe_highlight"/>
+                        </header>
+
+                        <div class="row">
+                            <span>This wizard will generate payslips for all selected employee(s) based
+                                on the dates and credit note specified on Payslips Run.
+                            </span>
+                        </div>
+                        <group>
+                            <field name="department_ids" widget="many2many_tags"/>
+                        </group>
+                            <field name="employee_ids" nolabel="1"/>
+                        </form>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
+

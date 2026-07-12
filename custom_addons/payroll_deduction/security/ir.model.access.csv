@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hr_deduction,account.hr.deduction,model_hr_deduction,base.group_user,1,1,1,1
+access_deduction_line,account.deduction.line,model_deduction_line,base.group_user,1,1,1,1
+
+

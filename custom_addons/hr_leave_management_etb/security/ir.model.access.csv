@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_leave_entitlement_manager,hr.leave.entitlement.manager,model_hr_leave_entitlement,hr_holidays.group_hr_holidays_manager,1,1,1,1
+access_hr_leave_entitlement_user,hr.leave.entitlement.user,model_hr_leave_entitlement,hr_holidays.group_hr_holidays_user,1,0,0,0
+access_hr_leave_increment_rule_manager,hr.leave.increment.rule.manager,model_hr_leave_increment_rule,hr_holidays.group_hr_holidays_manager,1,1,1,1
+access_hr_leave_increment_rule_user,hr.leave.increment.rule.user,model_hr_leave_increment_rule,base.group_user,1,0,0,0

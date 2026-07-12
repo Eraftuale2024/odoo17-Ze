@@ -1,0 +1,1 @@
+from . import deduction,hr_payslip
