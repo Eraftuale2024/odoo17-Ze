@@ -1,0 +1,23 @@
+services:
+  odoo:
+    image: odoo:17
+    container_name: odoo17_dev
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - ../../addons:/mnt/extra-addons
+      - ../../custom_addons:/mnt/custom-addons
+      - ../../config/odoo.conf:/etc/odoo/odoo.conf
+
+  db:
+    image: postgres:15
+    container_name: odoo17_db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    ports:
+      - "5433:5432"
+

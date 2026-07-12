@@ -1,0 +1,126 @@
+=== /mnt/extra-addons/hr_overtime/data/data.xml ===
+<odoo>
+    <data>
+        <record id="hr_salary_rule_overtime_request" model="hr.salary.rule">
+            <field name="name">Overtime</field>
+            <field name="code">OT100</field>
+
+=== /mnt/extra-addons/hr_overtime/data/hr_overtime_demo.xml ===
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="om_hr_payroll.structure_base" model="hr.payroll.structure">
+            <field eval="[(4, ref('hr_salary_rule_overtime_request'))]"
+
+=== /mnt/extra-addons/hr_overtime/data/overtime_request_notification.xml ===
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="overtime_request_email_template_id" model="mail.template">
+           <field name="name">Overtime Request</field>
+
+=== /mnt/extra-addons/hr_overtime/security/overtime_approver_group.xml ===
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="hr_overtime_res_groups_category">
+            <field name="name">Overtime</field>
+
+=== /mnt/extra-addons/hr_overtime/views/custom_hr_attendance.xml ===
+<odoo>
+    <record id="custom_hr_attendance_tree_inherit" model="ir.ui.view">
+        <field name="name">custom hr attendance</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+
+=== /mnt/extra-addons/hr_overtime/views/hr_payslip.xml ===
+<odoo>
+    <data>
+
+        <record id="hr_payslip_inherited_view_overtime" model="ir.ui.view">
+            <field name="name">Overtime.Inherited.View</field>
+
+=== /mnt/extra-addons/hr_overtime/views/overtime_calculation.xml ===
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+    <record id="overtime_calculator_action" model="ir.actions.act_window">
+
+=== /mnt/extra-addons/hr_overtime/views/overtime_rate.xml ===
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="overtime_rate_action" model="ir.actions.act_window">
+        <field name="name">Overtime Rate</field>
+
+=== /mnt/extra-addons/hr_overtime/views/overtime_request.xml ===
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extension Action -->
+    <record id="overtime_request_action" model="ir.actions.act_window">
+        <field name="name">overtime request</field>
+
+=== /mnt/extra-addons/hr_overtime/data/data.xml ===
+<odoo>
+    <data>
+        <record id="hr_salary_rule_overtime_request" model="hr.salary.rule">
+            <field name="name">Overtime</field>
+            <field name="code">OT100</field>
+
+=== /mnt/extra-addons/hr_overtime/data/hr_overtime_demo.xml ===
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="om_hr_payroll.structure_base" model="hr.payroll.structure">
+            <field eval="[(4, ref('hr_salary_rule_overtime_request'))]"
+
+=== /mnt/extra-addons/hr_overtime/data/overtime_request_notification.xml ===
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="overtime_request_email_template_id" model="mail.template">
+           <field name="name">Overtime Request</field>
+
+=== /mnt/extra-addons/hr_overtime/security/overtime_approver_group.xml ===
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="hr_overtime_res_groups_category">
+            <field name="name">Overtime</field>
+
+=== /mnt/extra-addons/hr_overtime/views/custom_hr_attendance.xml ===
+<odoo>
+    <record id="custom_hr_attendance_tree_inherit" model="ir.ui.view">
+        <field name="name">custom hr attendance</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+
+=== /mnt/extra-addons/hr_overtime/views/hr_payslip.xml ===
+<odoo>
+    <data>
+
+        <record id="hr_payslip_inherited_view_overtime" model="ir.ui.view">
+            <field name="name">Overtime.Inherited.View</field>
+
+=== /mnt/extra-addons/hr_overtime/views/overtime_calculation.xml ===
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+    <record id="overtime_calculator_action" model="ir.actions.act_window">
+
+=== /mnt/extra-addons/hr_overtime/views/overtime_rate.xml ===
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="overtime_rate_action" model="ir.actions.act_window">
+        <field name="name">Overtime Rate</field>
+
+=== /mnt/extra-addons/hr_overtime/views/overtime_request.xml ===
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Extension Action -->
+    <record id="overtime_request_action" model="ir.actions.act_window">
+        <field name="name">overtime request</field>
+

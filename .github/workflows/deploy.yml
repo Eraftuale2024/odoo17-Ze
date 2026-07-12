@@ -1,0 +1,35 @@
+name: Automated Odoo 17 Production Deployment
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Hetzner Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "==== Server Par Deployment Shuru Ho Rahi Hai ===="
+            cd /opt/odoo17-ze
+            
+            echo "1. Git se naya code pull kiya ja raha hai..."
+            git pull origin main
+            
+            echo "2. Odoo Containers ko reload kiya ja raha hai..."
+            docker compose -f prod-docker-compose.yml down
+            docker compose -f prod-docker-compose.yml up -d --build --force-recreate
+
+            
+            echo "==== Deployment Successful! Odoo Live Hai ===="
